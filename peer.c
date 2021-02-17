@@ -431,6 +431,10 @@ enet_peer_reset (ENetPeer * peer)
     peer -> outgoingUnsequencedGroup = 0;
     peer -> eventData = 0;
     peer -> totalWaitingData = 0;
+
+    peer->totalPacketsSent = 0;
+    peer->totalPacketsLost = 0;
+
     peer -> flags = 0;
 
     memset (peer -> unsequencedWindow, 0, sizeof (peer -> unsequencedWindow));
