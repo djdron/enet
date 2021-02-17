@@ -1358,6 +1358,7 @@ enet_protocol_check_timeouts (ENetHost * host, ENetPeer * peer, ENetEvent * even
                  ENET_TIME_DIFFERENCE (host -> serviceTime, peer -> earliestTimeout) >= peer -> timeoutMinimum)))
        {
           enet_protocol_notify_disconnect (host, peer, event);
+          event->data = (enet_uint32)-1;
 
           return 1;
        }
@@ -1366,6 +1367,7 @@ enet_protocol_check_timeouts (ENetHost * host, ENetPeer * peer, ENetEvent * even
          peer -> reliableDataInTransit -= outgoingCommand -> fragmentLength;
           
        ++ peer -> packetsLost;
+       ++ peer -> totalPacketsLost;
 
        outgoingCommand -> roundTripTimeout *= 2;
 
@@ -1547,6 +1549,7 @@ enet_protocol_check_outgoing_commands (ENetHost * host, ENetPeer * peer)
          enet_free (outgoingCommand);
 
        ++ peer -> packetsSent;
+       ++ peer -> totalPacketsSent;
         
        ++ command;
        ++ buffer;
